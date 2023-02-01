@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Room</string>
+    <string name="student_data">Student Data</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="write_data">Write data</string>
+    <string name="roll_no">Roll no</string>
+    <string name="read_data">Read data</string>
+    <string name="delete_data">Delete data</string>
+</resources>
