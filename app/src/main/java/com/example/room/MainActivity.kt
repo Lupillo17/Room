@@ -24,6 +24,40 @@ class MainActivity : AppCompatActivity() {
         binding.btnReadData.setOnClickListener {
             readData()
         }
+
+        binding.btnDeleteData.setOnClickListener {
+            deleteData()
+        }
+
+        binding.btnUpdate.setOnClickListener {
+            updateByRollNo()
+        }
+    }
+
+    private fun updateByRollNo() {
+        val firstName = binding.etFirstName.text.toString()
+        val lastName = binding.etLastName.text.toString()
+        val rollNo = binding.etRollNo.text.toString()
+
+        if (firstName.isNotEmpty() && lastName.isNotEmpty() && rollNo.isNotEmpty()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                appDb.studentDao().updateByRollNo(firstName, lastName, rollNo.toInt())
+            }
+
+            binding.etFirstName.text?.clear()
+            binding.etLastName.text?.clear()
+            binding.etRollNo.text?.clear()
+
+            Toast.makeText(this@MainActivity, "Successfully updated", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this@MainActivity, "Please add data", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun deleteData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            appDb.studentDao().deleteAll()
+        }
     }
 
     private fun writeData() {
@@ -51,8 +85,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private suspend fun displayData(student: Student){
-        withContext(Dispatchers.Main){
+    private suspend fun displayData(student: Student) {
+        withContext(Dispatchers.Main) {
             binding.tvFirstName.text = student.firstName
             binding.tvLastName.text = student.lastName
             binding.tvRollNo.text = student.rollNo.toString()
